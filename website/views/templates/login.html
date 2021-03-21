@@ -13,14 +13,18 @@
 <body>
 
     <nav>
-        <a href="/">Home</a>
-        <a href="/auth/login">Login</a>
-        <a href="/auth/logout">Logout</a>
-        <a href="/auth/signUp">Sign Up</a>
+        <div class="nav-left">
+            <a href="/" id="Home" >Home</a>
+        </div>
+        <div class="nav-right">
+            <a href="/login" id="Login" >Login</a>
+            <a href="/logout" id="Logout" >Logout</a>
+            <a href="/signUp" id="signUp" >Sign Up</a>
+        </div>
     </nav>
 
     <main>
-        <form action="confirmacao" method="post" id="login-form">
+        <form method="post" id="login-form">
             <header class="form-group-top">
                 <h3>Formulário de Login</h3>
             </header>
@@ -47,5 +51,6 @@
     
     <footer></footer>
     <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/navbarScript.js') }}"></script>
 </body>
 </html>

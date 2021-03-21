@@ -10,16 +10,20 @@
 <body>
 
     <nav>
-        <a href="/">Home</a>
-        <a href="/auth/login">Login</a>
-        <a href="/auth/logout">Logout</a>
-        <a href="/auth/signUp">Sign Up</a>
+        <div class="nav-left">
+            <a href="/" id="Home" >Home</a>
+        </div>
+        <div class="nav-right">
+            <a href="/login" id="Login" >Login</a>
+            <a href="/logout" id="Logout" >Logout</a>
+            <a href="/signUp" id="signUp" >Sign Up</a>
+        </div>
     </nav>
 
     <main>
         
 
-        <form id="signUp-form" method="post" style="margin-top:40px;" action="/auth/validacao">
+        <form id="signUp-form" method="post" style="margin-top:40px;" action="/auth/signUp">
             <header class="form-group-top">
                 <h3> Sign Up</h3>
             </header>
@@ -57,5 +61,7 @@
     <footer></footer>
 
     <script src="{{ url_for('static', filename='scripts/signUp.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/navbarScript.js') }}"></script>
 </body>
 </html>

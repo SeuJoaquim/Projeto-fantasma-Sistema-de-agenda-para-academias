@@ -1,3 +1,4 @@
+
 const myForm = document.getElementById("signUp-form");
 
 
@@ -30,23 +31,57 @@ function loadMessages(obj){
         insertInList(message)
     }
     div.style.visibility = "visible"
+
+    
     
 }
 
+function login(formData){
+    const email         = formData.get("email");
+    const password      = formData.get("password1");
+    let headers = new Headers();
+    headers.set('Authorization', 'Basic ' + btoa(`${email}:${password}`))
+    fetch("/auth/login", {
+        method: 'post',
+        headers: headers
+    }).then( (resp) =>{
+        return resp.json();
+    }).then( (json)=> {
+        const token = json.token;
+        if (token){
+            document.cookie = `token=${token}; expires=${json.exp}`;
+
+            const url = `/app`
+            window.location.href = url;
+        }
+        else{
+            alert("Tente novamente")
+        }
+    });
+}
 
 myForm.addEventListener("submit", (form)=> {
     form.preventDefault();
     const formData = new FormData(myForm)
 
-    fetch("/auth/validacao", {
+    fetch("/auth/signUp", {
         method: 'post',
         body: formData
     }).then( (resp) =>{
         return resp.json();
     }).then( (json)=> {
-        loadMessages(json);
-    }).cath((e)=>{
-        console.log(e);
-    });
+        const messages  = json.messages;
 
+        let formIsValid = true
+        for (message of messages){
+            if (message.category === "error"){
+                formIsValid = false
+            }
+        }
+        if (formIsValid){
+            login(formData)
+        }else{
+            loadMessages(json);
+        }
+    });
 });

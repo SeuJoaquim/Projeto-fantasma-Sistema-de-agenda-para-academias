@@ -1,26 +1,14 @@
-from flask import Blueprint, render_template, redirect, request, jsonify
-from .controllers.validationController import ValidationController
-from .controllers.confirmacaoController import ConfirmnController
+from flask import Blueprint, render_template, redirect, request, jsonify, url_for
+from .controllers.validationController  import ValidationController
+from .controllers.loginController import LoginController
+
 
 auth = Blueprint("auth", __name__)
 
-# Acess Routes
-@auth.route("/login")
-def login():
-    return render_template("auth/login.html")
-
-@auth.route("/logout")
-def logout():
-    return {}
-
-@auth.route("/signUp")
-def signUp():
-    return render_template("auth/signUp.html")
-
 
 # Authentication Services
-@auth.route("/validacao", methods=["POST"])
-def validacao():
+@auth.route("/signUp", methods=["POST"])
+def signUp():
     if request.method =="POST":
         email       = request.form.get("email")
         firstName   = request.form.get("firstName")
@@ -34,15 +22,12 @@ def validacao():
         return jsonify(resp)
 
 
-@auth.route("/confirmacao", methods=["POST"])
-def confirmacao():
+@auth.route("/login", methods=["POST"])
+def login():
     if request.method =="POST":
-        data = {}
-        email       = request.form.get("email")
-        password    = request.form.get("password")
-
-        confirmacaoController   = ConfirmnController(email,password)
-        resp                    = confirmacaoController.execute()
+        auth                    = request.authorization
+        loginController         = LoginController()
+        return loginController.execute(auth)
         
-        return jsonify(resp)
+        
 

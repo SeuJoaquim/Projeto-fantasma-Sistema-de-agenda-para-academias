@@ -1,7 +1,9 @@
 from website import db
 from website.database.models.userModel import User
+from website.controllers.userDatabaseController import user_by_email
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user
+
+
 
 class ValidationController():
     def __init__(self,email,firstName,password1,password2):
@@ -12,7 +14,6 @@ class ValidationController():
         self.flash      = []
 
     def execute(self):
-    
         def FormIsValid():
             def flash(message, category):
                 self.flash.append({
@@ -20,10 +21,11 @@ class ValidationController():
                     "category": category
                 })
             isValid = True
-            user        = User.query.filter_by(email=self.email).first()
+            user        = user_by_email(self.email)
             if user:
-                print(user)
                 flash("Email already exists.", category="error")
+                isValid = False
+                
             if len(self.email) < 4:
                 flash("Email must be greater then 4 characters.", category='error')
                 isValid = False
@@ -41,7 +43,7 @@ class ValidationController():
                 new_user = User(email=self.email,first_name=self.firstName, password=generate_password_hash(self.password1,method="sha256"))
                 db.session.add(new_user)
                 db.session.commit()
-                login_user(user, remember=True)
+                
 
                 flash("Account created!", category='success')
                 isValid = True
@@ -49,6 +51,7 @@ class ValidationController():
             return isValid
 
         if FormIsValid():
+            user        = user_by_email(self.email)
             data = {}
             data["code"]        = 200
             data["description"] = "Request accepted!"
