@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
+</head>
+<body>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/auth/login">Login</a>
+        <a href="/auth/logout">Logout</a>
+        <a href="/auth/signUp">Sign Up</a>
+    </nav>
+
+    <main>
+        
+
+        <form id="signUp-form" method="post" style="margin-top:40px;" action="/auth/validacao">
+            <header class="form-group-top">
+                <h3> Sign Up</h3>
+            </header>
+            <div class="form-main-container">
+                <div class="alert-message" id="alert-div">
+                    <ul id="alert-list">
+        
+                    </ul>
+                </div>
+                <div class="form-group">
+                    
+                    <input type="email" name="email" id="email" placeholder="Enter email" class="form-control">
+                </div>
+                <div class="form-group">
+                    
+                    <input type="text" name="firstName" id="firstName" placeholder="Enter first name" class="form-control">
+                </div>
+                <div class="form-group">
+                    
+                    <input type="password" name="password1" id="password1" placeholder="Enter password" class="form-control">
+                </div>
+                <div class="form-group">
+                    
+                    <input type="password" name="password2" id="password2" placeholder="Confirm password" class="form-control">
+                </div>
+                
+                <button type="submit" class="form-btn" style="margin: 30px 210px;">Submit</button>
+
+            </div>
+            
+            
+        </form>        
+    </main>
+    
+    <footer></footer>
+
+    <script src="{{ url_for('static', filename='scripts/signUp.js') }}"></script>
+</body>
+</html>
