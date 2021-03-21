@@ -1,6 +1,5 @@
 from website import db
 from website.database.models.userModel import User
-from website.controllers.userDatabaseController import user_by_email
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -21,7 +20,7 @@ class ValidationController():
                     "category": category
                 })
             isValid = True
-            user        = user_by_email(self.email)
+            user        = User.query.filter_by(email=self.email).first()
             if user:
                 flash("Email already exists.", category="error")
                 isValid = False
@@ -51,19 +50,17 @@ class ValidationController():
             return isValid
 
         if FormIsValid():
-            user        = user_by_email(self.email)
+            user        = User.query.filter_by(email=self.email).first()
             data = {}
-            data["code"]        = 200
             data["description"] = "Request accepted!"
             data["messages"]    = self.flash
+            return data, 200
+
         else:
             data = {}
-            data["code"]        = 400
             data["description"] = "Bad Request"
             data["messages"]    = self.flash
-
-        return data
-
+            return data, 400
 
 
         

@@ -15,11 +15,11 @@ def signUp():
         password1   = request.form.get("password1")
         password2   = request.form.get("password2")
         
-        validationController    = ValidationController(email,firstName,password1,password2) 
-        resp                    = validationController.execute()
+        validationController        = ValidationController(email,firstName,password1,password2) 
+        resp, code                  = validationController.execute()
 
         
-        return jsonify(resp)
+        return jsonify(resp), code
 
 
 @auth.route("/login", methods=["POST"])

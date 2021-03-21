@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", ()=>{
-    fetch("/app/user")
+    fetch("/user")
     .then( (resp) =>{
         return resp.json()
     })
