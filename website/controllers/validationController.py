@@ -1,5 +1,5 @@
 from website import db
-from website.database.models.userModel import User
+from website.database.models.personModels       import User
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -39,7 +39,7 @@ class ValidationController():
                 isValid = False
 
             if isValid:
-                new_user = User(email=self.email,first_name=self.firstName, password=generate_password_hash(self.password1,method="sha256"))
+                new_user = User(email=self.email,name=self.firstName, password=generate_password_hash(self.password1,method="sha256"))
                 db.session.add(new_user)
                 db.session.commit()
                 

@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
         div.appendChild(ul)
 
         const email         = json.email
-        const first_name    = json.first_name
+        const name          = json.name
 
         createChild(email)
-        createChild(first_name)
+        createChild(name)
 
         div.style.visibility = "visible"
         

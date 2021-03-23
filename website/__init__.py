@@ -4,6 +4,7 @@ from os import path
 import random
 import string
 
+
 db = SQLAlchemy()
 DB_NAME = "database/database.db"
 gen = string.ascii_letters + string.digits + string.ascii_uppercase
@@ -15,6 +16,8 @@ def create_app():
     app = Flask(__name__, template_folder="./views/templates",static_url_path='', static_folder="./views/static" )
     app.config["SECRET_KEY"] = key
     app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
+    
+
     db.init_app(app)
 
     # Urls and routers
@@ -23,7 +26,6 @@ def create_app():
     app.register_blueprint(router, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/auth")
 
-    from website.database.models.userModel import User
 
     create_database(app)
     

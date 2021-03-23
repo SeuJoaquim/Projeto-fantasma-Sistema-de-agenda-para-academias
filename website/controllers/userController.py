@@ -1,22 +1,26 @@
-from website.database.models.userModel          import User
+from website.database.models.personModels       import User
 from website.controllers.validationController   import ValidationController
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import jsonify
 from website import db
 
+""" Retorna objeto usuário da db especificado pelo email  """
 def user_by_email(email):
     try:
         return User.query.filter_by(email=email).first()
     except:
         return None
 
+"""Gera dicionário somente com ID, EMAIL e PRIMEIRO NOME do usuário"""
+
 def get_json(dict):
     data = {}
     data["id"]          = dict.id
     data["email"]       = dict.email
-    data["first_name"]  = dict.first_name
+    data["name"]        = dict.name
     return data
 
+"""Retorna todos os usuários """
 
 def get_Users(name=""):
     data = {}
@@ -55,8 +59,8 @@ def get_user_by_id(id):
 
 
 """Cadastro de usuários com validação de existência"""
-def post_user(email,first_name,password):
-    validationController    = ValidationController(email,first_name,password,password) 
+def post_user(email,name,password):
+    validationController    = ValidationController(email,name,password,password) 
     resp, code              = validationController.execute()
 
     return resp, code
@@ -65,7 +69,7 @@ def post_user(email,first_name,password):
 """Atualiza usuário baseado no ID, caso o mesmo exista."""
 
 
-def update_user(id, email, first_name, password ):
+def update_user(id, email, name, password ):
     data = {}
     user = User.query.get(id)
 
@@ -79,7 +83,7 @@ def update_user(id, email, first_name, password ):
     if user:
         try:
             user.password   = pass_hash
-            user.first_name = first_name
+            user.name       = name
             user.email      = email
             db.session.commit()
             result          = get_json(user)
