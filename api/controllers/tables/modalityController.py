@@ -1,4 +1,4 @@
-from website.database.models.classModels        import Modality, Class
+from api.database.models.classModels        import Modality, Class
 
 from flask import jsonify
 from website import db

@@ -1,7 +1,7 @@
-from website.database.models.classModels            import Class
-from website.database.models.personModels           import User, Professor
-from website.database.models.relationshipModels     import UserClassRelationship
-from website.controllers.tables.databaseController  import DatabaseController
+from api.database.models.classModels            import Class
+from api.database.models.personModels           import User, Professor
+from api.database.models.relationshipModels     import UserClassRelationship
+from api.controllers.tables.databaseController  import DatabaseController
 
 from flask import jsonify
 from website import db
@@ -40,7 +40,7 @@ class ClassController(DatabaseController):
             return data, 404
 
     """Atualiza classe baseado no ID, caso o mesmo exista."""
-    def update(self,name, date, maxNumber, minNumber, professor_id, modality_id):
+    def update(self,id,name, date, maxNumber, minNumber, professor_id, modality_id):
         data = {}
         classe = Class.query.get(id)
 

@@ -31,7 +31,7 @@ class UserController(DatabaseController):
         password2       = kwargs.get("password2")
         graduation      = kwargs.get("graduation")
         telefoneNumber  = kwargs.get("telefoneNumber")
-        
+
         if (self.object.__name__ == "User") or (self.object.__name__ == "Admin"):
             validationController    = ValidationController(object=self.object) 
             validation, resp        = validationController.execute(email,name,password1,password2)
@@ -71,8 +71,7 @@ class UserController(DatabaseController):
 
         return {}, 400
 
-        
-
+    
     """Atualiza usuário baseado no ID, caso o mesmo exista."""
     def update(self,**kwargs):
         data = {}
@@ -133,7 +132,7 @@ class UserController(DatabaseController):
         user        = self.get_query_by_id(id)[0]
 
         if user:
-            classes     = UserClassRelationship.query.filter_by(user_id=user.id).all()
+            classes     = UserClassRelationship.query.filter_by(user_id=user["id"]).all()
 
             if classes:
                 classesList = []
