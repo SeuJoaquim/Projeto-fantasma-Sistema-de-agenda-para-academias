@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template, redirect, request, jsonify, url_for
-from website.controllers.validationController       import ValidationController
 from website.controllers.loginController            import LoginController
-from website.controllers.tables.userController      import UserController
+from api.controllers.tables.personController      import UserController
 
 
 userController          = UserController()
-validationController    = ValidationController()
+
 
 auth = Blueprint("auth", __name__)
 
@@ -18,7 +17,7 @@ def signUp():
         password1   = request.form.get("password1")
         password2   = request.form.get("password2")
         
-        resp, code  = userController.post(email,name,password1,password2)
+        resp, code  = userController.post(email=email, name=name, password1=password1,password2=password2)
         return jsonify(resp), code
 
 

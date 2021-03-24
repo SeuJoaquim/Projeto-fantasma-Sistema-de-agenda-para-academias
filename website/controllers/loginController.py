@@ -2,12 +2,12 @@ import datetime
 import jwt
 from functools import wraps
 
-from website                                    import key
-from website.database.models.personModels       import User
-from website.controllers.tables.userController         import UserController
+from api.database.models.personModels           import User, Admin
+from api.controllers.tables.personController      import UserController
 
 from werkzeug.security import check_password_hash
 from flask import jsonify, request
+from website import key
 
 class LoginController():
     def execute(self, auth):
@@ -27,16 +27,3 @@ class LoginController():
         return jsonify({'message': 'could not verify2', 'WWW-Authenticate': 'Basic auth="Login required"'}), 401
 
 
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = request.cookies.get('token')
-        if not token:
-            return jsonify({'message': 'token is missing', 'data': []}), 401
-        try:
-            data            = jwt.decode(token, key, algorithms=["HS256"])
-            current_user    = User.query.filter_by(email=data['email']).first()
-        except:
-            return jsonify({'message': 'token is invalid or expired', 'data': []}), 401
-        return f(current_user, *args, **kwargs)
-    return decorated

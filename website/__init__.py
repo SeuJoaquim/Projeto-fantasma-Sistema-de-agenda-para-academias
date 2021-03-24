@@ -6,7 +6,7 @@ import string
 
 
 db = SQLAlchemy()
-DB_NAME = "database/database.db"
+DB_NAME = "../api/database/database.db"
 gen = string.ascii_letters + string.digits + string.ascii_uppercase
 key = ''.join(random.choice(gen) for i in range(12))
 
@@ -24,10 +24,18 @@ def create_app():
     from .routers.home import home as home_router
     from .routers.auth import auth as auth_router
     from .routers.app  import app as app_router
+    # from .routers.admin  import admin as admin_router
     app.register_blueprint(home_router, url_prefix="/")
     app.register_blueprint(auth_router, url_prefix="/auth")
     app.register_blueprint(app_router, url_prefix="/app")
+    # app.register_blueprint(admin_router, url_prefix="/admin")
 
+    # Api Routes
+    from api.routers.user import user as user_router
+    app.register_blueprint(user_router, url_prefix="/api/user")
+    
+    from api.routers.admin import admin
+    app.register_blueprint(admin, url_prefix="/api/admin")
 
     create_database(app)
     

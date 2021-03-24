@@ -1,5 +1,5 @@
 from website import db
-from website.database.models.personModels           import User
+from api.database.models.personModels           import User
 from werkzeug.security                              import generate_password_hash, check_password_hash
 
 

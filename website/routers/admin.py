@@ -1,21 +1,21 @@
 from flask import Blueprint,request, render_template,make_response, redirect,url_for, jsonify, make_response
 
-from api.controllers.authorizationMethods           import token_required
+from api.controllers.authorizationMethods           import admin_required
 
 
-app = Blueprint("app", __name__)
+admin = Blueprint("admin", __name__)
 
 # App Routes
-@app.route("/")
-@token_required
-def main_app(current_user):
-    return render_template("/app/index.html")
+@admin.route("/")
+# @admin_required
+def main_admin(current_user):
+    return render_template("/admin/index.html")
 
 
 
 # User Database Routes
-@app.route("/user")
-@token_required
+@admin.route("/user")
+# @admin_required
 def user(current_user):
     data = {}
     data["email"]   = current_user.email
