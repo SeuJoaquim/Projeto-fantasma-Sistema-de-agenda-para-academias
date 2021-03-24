@@ -30,7 +30,7 @@ def execute():
     db.session.add(new_class)
     db.session.commit()
 
-    new_class = Class(name="Natacao", date="now", maxNumber=1,minNumber=2, professor_id=1,modality_id=1,)
+    new_class = Class(name="eafa", date="esw", maxNumber=1,minNumber=2, professor_id=1,modality_id=1,)
     db.session.add(new_class)
     db.session.commit()
 

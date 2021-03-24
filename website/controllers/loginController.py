@@ -4,7 +4,7 @@ from functools import wraps
 
 from website                                    import key
 from website.database.models.personModels       import User
-from website.controllers.userDatabaseController import user_by_email
+from website.controllers.tables.userController         import UserController
 
 from werkzeug.security import check_password_hash
 from flask import jsonify, request
@@ -14,7 +14,7 @@ class LoginController():
         if not auth or not auth.username or not auth.password:
             return jsonify({'message': 'could not verify1', 'WWW-Authenticate': 'Basic auth="Login required"'}), 401
         
-        user = user_by_email(auth.username)
+        user = User.query.filter_by(email=auth.username).first()
         if not user:
             return jsonify({'message': 'user not found', 'data': []}), 401
 
@@ -35,7 +35,7 @@ def token_required(f):
             return jsonify({'message': 'token is missing', 'data': []}), 401
         try:
             data            = jwt.decode(token, key, algorithms=["HS256"])
-            current_user    = user_by_email(email=data['email'])
+            current_user    = User.query.filter_by(email=data['email']).first()
         except:
             return jsonify({'message': 'token is invalid or expired', 'data': []}), 401
         return f(current_user, *args, **kwargs)

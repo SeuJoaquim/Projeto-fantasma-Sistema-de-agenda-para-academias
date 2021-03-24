@@ -20,11 +20,13 @@ def create_app():
 
     db.init_app(app)
 
-    # Urls and routers
-    from .router import router
-    from .auth   import auth
-    app.register_blueprint(router, url_prefix="/")
-    app.register_blueprint(auth, url_prefix="/auth")
+    # Urls and homes
+    from .routers.home import home as home_router
+    from .routers.auth import auth as auth_router
+    from .routers.app  import app as app_router
+    app.register_blueprint(home_router, url_prefix="/")
+    app.register_blueprint(auth_router, url_prefix="/auth")
+    app.register_blueprint(app_router, url_prefix="/app")
 
 
     create_database(app)
